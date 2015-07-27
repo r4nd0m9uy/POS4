@@ -53,20 +53,21 @@ void listen(map<long, product>& products)
 			listproducts(products);
 			break;
 		case 2:
-			if(saved) {
-			cout << "Cashiersystem Terminated." << endl << "Goodbye.";
-			exit(0);}
-			else{
+			if(1) { //needed cause of string answer line...
 				string answer;
-				while (answer != "y" and answer != "n") {
+				while (answer != "y" and answer != "n" and !saved) {
 				cout << "Recent changes aren't saved yet. Do you still want to quit? [y/n].";
 				cin >> answer;}
-				if(answer=="y") {
+				if(answer=="y" or saved) {
 					cout << "Cashiersystem Terminated." << endl << "Goodbye.";
 					exit(0);
 				}
 
 			}
+			break;
+		case 3:
+			writeProductstoFile(products, "prijslijst.txt");
+			saved = true;
 			break;
 		default:
 			throw("Command not found <listen>");

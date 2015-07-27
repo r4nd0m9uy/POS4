@@ -13,6 +13,7 @@
 #include <sstream>
 #include <string>
 #include <algorithm>
+#include <iomanip>
 //#include <string>
 using namespace std;
 
@@ -35,6 +36,7 @@ class product
 
 	//printers:
 	void printItem(ostream& stream = cout);
+	void writeItem(ostream& stream = cout);
 
 
 
@@ -46,10 +48,10 @@ private:
 
 };
 
-//load product list PUT IN CPP
+//load product list
 map<long, product> loadProductsfromFile(const char* file);
 
 //write to product list
-
+void writeProductstoFile(map<long, product>& products, const char* filename);
 
 #endif /* PRODUCT_H_ */

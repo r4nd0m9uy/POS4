@@ -49,13 +49,20 @@ long product::getStock()
 }
 void product::printItem(ostream& stream)
 {
-	stream << barcode_ << "\t" << stock_ << "\t" << price_ << "\t" << title_ << endl;
+	stream << barcode_ << "\t" << stock_ << "\t" << fixed << setprecision(2) << price_ << "\t" << title_ << endl;
 }
+void product::writeItem(ostream& stream)
+{
+	stream << barcode_ << "\t" << stock_ << "\t" << title_ << "\t" << fixed << setprecision(2) << price_ << endl;
+}
+
 map<long, product> loadProductsfromFile(const char* file)
 {
 	map<long, product> products;
 	string productline;
 	ifstream productfile;
+	static string pricelistfile;
+	pricelistfile = file;
 	productfile.open(file);
 	if (productfile.is_open())
 	{
@@ -83,4 +90,15 @@ map<long, product> loadProductsfromFile(const char* file)
 	}
 	return products;
 };
-
+void writeProductstoFile(map<long, product>& products, const char* filename)
+{
+	ofstream writeout (filename);
+	if (writeout.is_open())
+	{
+		for (std::map<long, product>::iterator it = products.begin(); it != products.end(); ++it)
+			{
+			  it->second.writeItem(writeout);
+			}
+		writeout.close();
+	}
+}
