@@ -1,4 +1,5 @@
 4333465106205	50	Zakdoekjes	0.30
+5410041014600	5	Cent Wafers	0.30
 5449000000996	50	Coca-Cola 33cl blik	1.00
 8722700616948	50	Mayonaise met olijfolie 500 ml	4.50
 9780321563842	42	The C++ Programming Language, 4th Edition	17.90

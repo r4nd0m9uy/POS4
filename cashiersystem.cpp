@@ -8,14 +8,14 @@
 
 #include "cashiersystem.h"
 
-void listproducts(map<long, product>& products) {
+void listproducts(map<long, product>& products)
+{
 	//cout << "products listed." << endl;
 	for (std::map<long, product>::iterator it = products.begin(); it != products.end(); ++it)
 	{
 	  it->second.printItem();
 	}
 }
-
 void registerp(string command, map<long, product>& products)
 {
 	shoppingcart sc;
@@ -30,9 +30,46 @@ void registerp(string command, map<long, product>& products)
 	}
 	sc.printcart(products, cout);
 }
+void add(map<long, product>& products)
+{
+	map<long, product>::iterator it;
+	long barcode;
+	cin >> barcode;
+	it = products.find(barcode);
+	if (it == products.end())
+	{
+		string naam;
+		long stock;
+		string price;
+		cout << "Naam? ";
+		getline(cin, naam, '\n');
+		getline(cin, naam, '\n');
+		if(naam=="") {cout << "Artikel niet toegevoegd. (naam)";}else{
+			cout << "Prijs? ";
+			cin >> price;
+			if(price=="") {cout << "Artikel niet toegevoed. (prijs)";}else{
+				cout << "Voorraad? ";
+				cin >> stock;
+				if(stock==0) {cout << "Artikel niet toegevoed. (stock)";}else{
+					stringstream ss;
+					double newprice;
+					ss << price; ss >> newprice;
+					product newproduct(barcode, stock, naam, newprice);
+					products[barcode]=newproduct;
+					cout << "Artikel " << barcode << " (" << naam << ") toegevoegd. " << endl;
+		}}}
+	}else{
+		string title = products[barcode].getTitle();
+		cout << "Artikel " << barcode << " (" << title << ") reeds bestaand!";
 
-
-
+	}
+}
+void remove(map<long, product>& products)
+{
+	//long barcode;
+	//cin >> barcode;
+//HIER!
+}
 void listen(map<long, product>& products)
 {
 	static bool saved = true;
@@ -48,6 +85,9 @@ void listen(map<long, product>& products)
 		switchmap["list"] = 1;
 		switchmap["quit"] = 2;
 		switchmap["save"] = 3;
+		switchmap["add"] = 4;
+		switchmap["remove"] = 5;
+		switchmap["stock"] = 6;
 		switch(switchmap[command]) {
 		case 1:
 			listproducts(products);
@@ -68,6 +108,12 @@ void listen(map<long, product>& products)
 		case 3:
 			writeProductstoFile(products, "prijslijst.txt");
 			saved = true;
+			break;
+		case 4:
+			add(products);
+			break;
+		case 5:
+			remove(products);
 			break;
 		default:
 			throw("Command not found <listen>");
